@@ -1,0 +1,27 @@
+{
+  "name": "mahiro-project",
+  "version": "1.0.0",
+  "description": "基于 go-cqhttp 的 Node.js 机器人实现",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkanaIS/Mahiro-Project.git"
+  },
+  "keywords": [
+    "QQBot"
+  ],
+  "author": "Skana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SkanaIS/Mahiro-Project/issues"
+  },
+  "homepage": "https://github.com/SkanaIS/Mahiro-Project#readme",
+  "dependencies": {
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "ws": "^8.18.0"
+  }
+}
