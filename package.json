@@ -4,7 +4,7 @@
   "description": "基于 go-cqhttp 的 Node.js 机器人实现",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "app": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     "QQBot"
   ],
   "author": "Skana",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/SkanaIS/Mahiro-Project/issues"
   },
