@@ -1,7 +1,7 @@
 const rp = require('request-promise');
 const post_url = 'http://mc.skana.fun:5700'
-function root_func(path,body){
-    const options = {method: 'POST', url: post_url + path,body: body,json: true};
+function root_func(path, body) {
+    const options = { method: 'POST', url: post_url + path, body: body, json: true };
     return (rp(options))
 }
 /**获取群信息
@@ -11,8 +11,8 @@ function root_func(path,body){
  * @param {boolean} no_cache 是否不使用缓存（使用缓存可能更新不及时, 但响应更快）
  */
 function API_get_group_info(group_id, no_cache = false) {
-    let body= {'group_id': group_id,'no_cache': no_cache}
-    return root_func('/get_group_info',body)
+    let body = { 'group_id': group_id, 'no_cache': no_cache }
+    return root_func('/get_group_info', body)
 }
 /**发送消息
  * 终结点：/send_msg
@@ -24,9 +24,9 @@ function API_get_group_info(group_id, no_cache = false) {
  * @returns {object}
  */
 function API_send_msg(message_type, user_id, group_id, message, auto_escape = false) {
-    let body ={'message_type': message_type,'message': message,'auto_escape': auto_escape}
+    let body = { 'message_type': message_type, 'message': message, 'auto_escape': auto_escape }
     message_type = 'private' ? body['user_id'] = user_id : body['group_id'] = group_id;
-    return root_func('/send_msg',body)
+    return root_func('/send_msg', body)
 }
 /**发送私聊消息
  * 终结点：/send_private_msg
@@ -35,9 +35,9 @@ function API_send_msg(message_type, user_id, group_id, message, auto_escape = fa
  * @param {string} message 要发送的内容
  * @param {boolean} auto_escape 消息内容是否作为纯文本发送 ( 即不解析 CQ 码 ) , 只在 message 字段是字符串时有效
  */
-function API_send_private_msg(user_id, group_id, message, auto_escape) {
-    let body ={'user_id': user_id,'group_id': group_id,'message': message,'auto_escape':auto_escape}
-    return root_func('/send_private_msg',body)
+function API_send_private_msg(user_id, group_id, message, auto_escape = false) {
+    let body = { 'user_id': user_id, 'group_id': group_id, 'message': message, 'auto_escape': auto_escape }
+    return root_func('/send_private_msg', body)
 }
 /**发送群聊消息
  * /send_group_msg
@@ -46,15 +46,33 @@ function API_send_private_msg(user_id, group_id, message, auto_escape) {
  * @param {boolean} auto_escape 
  * @returns 
  */
-function API_send_group_msg(group_id, message, auto_escape) {
-    let body ={'group_id': group_id,'message': message,'auto_escape':auto_escape}
-    return root_func('/send_group_msg',body)
+function API_send_group_msg(group_id, message, auto_escape = false) {
+    let body = { 'group_id': group_id, 'message': message, 'auto_escape': auto_escape }
+    return root_func('/send_group_msg', body)
 }
 
-function API_set_group_portrait(){
-    
+function Mahiro_get_command_result(message) {
+    let command = String(message).slice('[CQ:at,qq=3636990074] '.length)
+    command = command.trim()
+    let args = command.split(' ')
+    command = args[0]
+    args.shift()
+    switch (command) {
+        case '#about':
+            return `关于 Mahiro Project
+开发人员: Skana
+特别鸣谢:
+-https://docs.go-cqhttp.org/
+已实现功能:
+-接收/发送消息`
+        case '#echo':
+            console.log(args[0])
+            return args[0]
+    }
+
 }
 module.exports = {
+    Mahiro_get_command_result,
     API_get_group_info,
     API_send_msg,
     API_send_private_msg,
