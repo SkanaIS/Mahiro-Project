@@ -66,7 +66,6 @@ function Mahiro_get_command_result(message) {
 已实现功能:
 -接收/发送消息`
         case '#echo':
-            console.log(args[0])
             return args[0]
     }
 

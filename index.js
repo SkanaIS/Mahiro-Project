@@ -1,5 +1,6 @@
 const WebSocket = require('ws')
 const api = require('./api.js')
+const he =require('he')
 const ws = new WebSocket(process.env.CQServer)
 Test()
 
@@ -54,6 +55,7 @@ ws.on('message', function message(data) {
         case 'message':
         case 'message_sent':
             const Message = new QQMessagePost(DataJson);
+            Message.raw_message=he.decode(Message.raw_message)//转换Html实体编码
             switch (Message.message_type) {
                 case 'group':
                     api.API_get_group_info(Message.group_id).then(result => {
@@ -61,7 +63,7 @@ ws.on('message', function message(data) {
                         console.info(`收到消息:来自群${Groupinfo.group_name}(${Groupinfo.group_id})的${Message.sender.nickname}(${Message.sender.user_id}):${Message.raw_message}`);
                         if (String(Message.raw_message).startsWith('[CQ:at,qq=3636990074] ')) {
                             const result = api.Mahiro_get_command_result(Message.raw_message);
-                            api.API_send_group_msg(Message.group_id, result, false)
+                            api.API_send_group_msg(Message.group_id, `[CQ:at,qq=${Message.sender.user_id}] `+result.toString(), false)
                         }
 
                     })
